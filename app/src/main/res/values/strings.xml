@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="episode">episode</string>
+    <string name="location">location</string>
+    <string name="personage">personage</string>
+    <string name="name">Name</string>
+    <string name="species">Species</string>
+    <string name="status">Status</string>
+    <string name="gender">Gender</string>
+    <string name="type">Type</string>
+    <string name="dimension">Dimension</string>
+    <string name="air_fate">Air Fate</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="episode_e">Episode</string>
+    <string name="origin">Origin</string>
+    <string name="location_l">Location</string>
+</resources>
