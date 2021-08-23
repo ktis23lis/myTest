@@ -3,6 +3,9 @@ package com.example.demo.domain.repository
 import android.os.Handler
 import android.os.Looper
 import com.example.demo.domain.*
+import com.example.demo.domain.model.Episode
+import com.example.demo.domain.model.Location
+import com.example.demo.domain.model.Personage
 import com.example.demo.network.responses.PersonageOpen
 import com.google.gson.Gson
 import java.net.HttpURLConnection

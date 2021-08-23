@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.R
 import com.example.demo.databinding.FragmentLocationListBinding
-import com.example.demo.domain.Location
 
 class LocationListFragment : Fragment(R.layout.fragment_location_list) {
 

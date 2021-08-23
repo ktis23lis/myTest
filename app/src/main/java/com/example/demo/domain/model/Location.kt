@@ -1,4 +1,4 @@
-package com.example.demo.domain
+package com.example.demo.domain.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

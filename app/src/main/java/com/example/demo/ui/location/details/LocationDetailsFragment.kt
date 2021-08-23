@@ -13,13 +13,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.PersonageAdapter
-import com.example.demo.PersonageDetailsFragment
 import com.example.demo.PersonageListFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentLocationDetailsBinding
-import com.example.demo.domain.Location
-import com.example.demo.ui.episode.list.EpisodeAdapter
-import com.example.demo.ui.episode.list.EpisodeListFragment
 import com.example.demo.ui.location.list.LocationListFragment
 
 class LocationDetailsFragment : Fragment(R.layout.fragment_location_details) {
@@ -44,8 +40,9 @@ class LocationDetailsFragment : Fragment(R.layout.fragment_location_details) {
         super.onAttach(context)
         goLocationBack = context as GoLocationBack
         itemPersonageSelected = context as PersonageListFragment.ItemPersonageSelected
-        personageAdapter = PersonageAdapter { personage ->
-            itemPersonageSelected.onItemPersonageSelected(personage)
+
+        personageAdapter = PersonageAdapter { i ->
+            itemPersonageSelected.onItemPersonageSelected(i)
         }
     }
 

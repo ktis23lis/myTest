@@ -9,14 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demo.domain.Personage
+import com.example.demo.domain.model.Personage
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 class PersonageAdapter(
-    private val onClick: (Personage) -> Unit
-) : RecyclerView.Adapter<PersonageAdapter.PersonageViewHolder>() {
+    private val onClick: (Int) -> Unit
+) : RecyclerView.Adapter<PersonageAdapter.PersonageViewHolder>(), Loading{
 
     var personageList = arrayListOf<Personage>()
         set(value) {
@@ -29,11 +29,17 @@ class PersonageAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.personage_list_item, parent, false)
         )
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: PersonageViewHolder, position: Int) {
+
+//        if ((position >= itemCount - 1 )){
+//            load(holder, position)
+//        }
+
+
+
         holder.bind(personageList[position])
         holder.itemView.setOnClickListener {
-            onClick(personageList[position])
+            onClick(personageList[position].personageId)
         }
     }
 
@@ -66,4 +72,13 @@ class PersonageAdapter(
                 })
         }
     }
+
+    override fun load(holder: PersonageAdapter.PersonageViewHolder,  position: Int) {
+        holder.bind(personageList[position])
+    }
+
+}
+
+interface Loading{
+    fun load(holder: PersonageAdapter.PersonageViewHolder,  position: Int)
 }
