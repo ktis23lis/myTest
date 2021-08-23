@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.domain.Episode
+import com.example.demo.domain.model.Episode
 
 class EpisodeAdapter(
     private val onClick : (Int) -> Unit
@@ -24,9 +24,10 @@ class EpisodeAdapter(
         )
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
+        val pos = holder.adapterPosition
         holder.bind(episodeList[position])
         holder.itemView.setOnClickListener {
-            onClick(episodeList[position].episodeId)
+            onClick(pos)
         }
     }
 

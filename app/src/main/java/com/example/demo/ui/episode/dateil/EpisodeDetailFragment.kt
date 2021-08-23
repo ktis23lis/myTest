@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.demo.PersonageDetailsFragment
+import com.example.demo.PersonageAdapter
+import com.example.demo.PersonageListFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentEpisodeDetailsBinding
-import com.example.demo.domain.Episode
+import com.example.demo.domain.model.Episode
 import com.example.demo.ui.episode.list.EpisodeListFragment
 import kotlinx.android.synthetic.main.fragment_episode_details.*
 
@@ -19,6 +20,9 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
     private val episodeDetailsViewModel by viewModels<EpisodeDetailsViewModel>()
     private lateinit var goEpisodeBack: GoEpisodeBack
     private lateinit var binding: FragmentEpisodeDetailsBinding
+    private lateinit var personageAdapter : PersonageAdapter
+    private lateinit var itemPersonageSelected: PersonageListFragment.ItemPersonageSelected
+
     private var myId = 0
 
     companion object {
@@ -32,6 +36,11 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         goEpisodeBack = context as GoEpisodeBack
+
+        itemPersonageSelected = context as PersonageListFragment.ItemPersonageSelected
+        personageAdapter = PersonageAdapter { i ->
+            itemPersonageSelected.onItemPersonageSelected(i)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +62,8 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        episodeDetailRecyclerView.adapter = personageAdapter
         episodeDetailsViewModel.episodeLiveData.observe(viewLifecycleOwner) {
             episodeName.text = it.episodeName
             episodeNumber.text = it.episode
@@ -60,6 +71,9 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
         }
         toolbar.setNavigationOnClickListener {
             goEpisodeBack.onGoEpisodeBack()
+        }
+        episodeDetailsViewModel.personageLiveData.observe(viewLifecycleOwner){
+            personageAdapter.personageList = it
         }
     }
 

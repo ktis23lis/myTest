@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.demo.domain.Location
-import com.example.demo.domain.Personage
+import com.example.demo.domain.model.Episode
+import com.example.demo.domain.model.Personage
 import com.example.demo.ui.episode.dateil.EpisodeDetailFragment
 import com.example.demo.ui.episode.list.EpisodeListFragment
 import com.example.demo.ui.location.details.LocationDetailsFragment
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onItemPersonageSelected(personage: Personage) {
-        initPersonageDetails(personage)
+    override fun onItemPersonageSelected(myId: Int) {
+        initPersonageDetails(myId)
     }
 
     override fun onItemLocationSelected(myId: Int) {
@@ -96,7 +96,12 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onItemEpisodeSelected(myId: Int) {
-        initEpisodeDetails(myId)
+        supportFragmentManager.beginTransaction().run {
+            val episodeDetailsFragment = EpisodeDetailFragment.newInstance(myId)
+            replace(R.id.container, episodeDetailsFragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     override fun onGoPersonageBack() {
@@ -124,9 +129,9 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun initPersonageDetails(personage: Personage) {
+    private fun initPersonageDetails(myId: Int) {
         supportFragmentManager.beginTransaction().run {
-            val personageDetailsFragment = PersonageDetailsFragment.newInstance(personage)
+            val personageDetailsFragment = PersonageDetailsFragment.newInstance(myId)
             replace(R.id.container, personageDetailsFragment)
             addToBackStack(null)
             commit()

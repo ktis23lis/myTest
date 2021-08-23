@@ -1,8 +1,8 @@
 package com.example.demo.domain.repository
 
-import com.example.demo.domain.Episode
-import com.example.demo.domain.Location
-import com.example.demo.domain.Personage
+import com.example.demo.domain.model.Episode
+import com.example.demo.domain.model.Location
+import com.example.demo.domain.model.Personage
 import java.util.concurrent.Executor
 
 interface RepositoryDetails {

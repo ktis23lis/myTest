@@ -1,5 +1,8 @@
 package com.example.demo.domain
 
+import com.example.demo.domain.model.Episode
+import com.example.demo.domain.model.Location
+import com.example.demo.domain.model.Personage
 import com.example.demo.domain.repository.SuccessList
 import java.util.concurrent.Executor
 

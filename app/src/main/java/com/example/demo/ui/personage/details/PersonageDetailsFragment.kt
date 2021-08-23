@@ -15,8 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.databinding.FragmentPersonageDetailsBinding
-import com.example.demo.domain.Location
-import com.example.demo.domain.Personage
 import com.example.demo.ui.PersonageDetailsViewModel
 import com.example.demo.ui.episode.list.EpisodeAdapter
 import com.example.demo.ui.episode.list.EpisodeListFragment
@@ -29,18 +27,18 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
     private lateinit var goPersonageBack : GoPersonageBack
     private lateinit var goLocation : GoLocation
     private lateinit var binding: FragmentPersonageDetailsBinding
-
     private lateinit var episodeAdapter : EpisodeAdapter
-
     private lateinit var itemEpisodeSelected: EpisodeListFragment.ItemEpisodeSelected
-    private lateinit var personage: Personage
     private var originId = 0
     private var locationId = 0
 
+
+    private var myId = 0
+
     companion object {
-        fun newInstance(personage: Personage) = PersonageDetailsFragment().apply {
+        fun newInstance(id: Int) = PersonageDetailsFragment().apply {
             val bundle = Bundle()
-            bundle.putParcelable(PersonageListFragment.PERSONAGE_LIST_TAG, personage)
+            bundle.putInt(PersonageListFragment.PERSONAGE_LIST_TAG, id)
             arguments = bundle
         }
     }
@@ -51,7 +49,6 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
         goLocation = context as GoLocation
         itemEpisodeSelected = context as EpisodeListFragment.ItemEpisodeSelected
 
-
         episodeAdapter = EpisodeAdapter { i ->
             itemEpisodeSelected.onItemEpisodeSelected(i)
         }
@@ -60,9 +57,8 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            personage = requireArguments().getParcelable(PersonageListFragment.PERSONAGE_LIST_TAG)!!
-
-            personageDetailsViewModel.getPersonage(personage.personageId, personage.personageEpisode)
+        myId = requireArguments().getInt(PersonageListFragment.PERSONAGE_LIST_TAG)
+            personageDetailsViewModel.getPersonage(myId)
         }
     }
 
@@ -88,13 +84,13 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
             personageSpecies.text = it.personageSpecies
             personageStatus.text = it.personageStatus
             personageGender.text = it.personageGender
-            personageOrigin.text = it.personageOrigin.name
-            personageLocation.text = it.personageLocation.locationName
+            personageOrigin.text = it.personagePersonageOrigin.name
+            personageLocation.text = it.personageLocation.name
 
             //not work for all!!!
-            if(it.personageOrigin.url != "" || it.personageLocation.locationUrl != ""){
-                originId = getMyId(it.personageOrigin.url)
-                locationId = getMyId(it.personageLocation.locationUrl)
+            if(it.personagePersonageOrigin.url != "" || it.personageLocation.url != ""){
+                originId = getMyId(it.personagePersonageOrigin.url)
+                locationId = getMyId(it.personageLocation.url)
             }
 
 
