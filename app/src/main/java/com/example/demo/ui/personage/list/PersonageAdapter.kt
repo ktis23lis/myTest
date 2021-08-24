@@ -20,7 +20,7 @@ class PersonageAdapter(
 
     var personageList = arrayListOf<Personage>()
         set(value) {
-            field = value
+                field = value
             notifyDataSetChanged()
         }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,10 +25,10 @@ import com.squareup.picasso.Picasso
 class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
 
     private val personageDetailsViewModel by viewModels<PersonageDetailsViewModel>()
-    private lateinit var goPersonageBack : GoPersonageBack
-    private lateinit var goLocation : GoLocation
+    private lateinit var goPersonageBack: GoPersonageBack
+    private lateinit var goLocation: GoLocation
     private lateinit var binding: FragmentPersonageDetailsBinding
-    private lateinit var episodeAdapter : EpisodeAdapter
+    private lateinit var episodeAdapter: EpisodeAdapter
     private lateinit var itemEpisodeSelected: EpisodeListFragment.ItemEpisodeSelected
     private var originId = 0
     private var locationId = 0
@@ -57,15 +58,15 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-        myId = requireArguments().getInt(PersonageListFragment.PERSONAGE_LIST_TAG)
+            myId = requireArguments().getInt(PersonageListFragment.PERSONAGE_LIST_TAG)
             personageDetailsViewModel.getPersonage(myId)
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentPersonageDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -84,35 +85,38 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
             personageSpecies.text = it.personageSpecies
             personageStatus.text = it.personageStatus
             personageGender.text = it.personageGender
-            personageOrigin.text = it.personagePersonageOrigin.name
-            personageLocation.text = it.personageLocation.name
-
-            //not work for all!!!
-            if(it.personagePersonageOrigin.url != "" || it.personageLocation.url != ""){
+            if (it.personagePersonageOrigin.url != "") {
                 originId = getMyId(it.personagePersonageOrigin.url)
-                locationId = getMyId(it.personageLocation.url)
+                personageOrigin.text = it.personagePersonageOrigin.name
+            } else {
+                originId = 0
+                personageOrigin.text = "?"
             }
+            if (it.personageLocation.url != "") {
+                locationId = getMyId(it.personageLocation.url)
+                personageLocation.text = it.personageLocation.name
 
-
+            } else {
+                locationId = 0
+                personageLocation.text = "?"
+            }
         }
         toolbar.setNavigationOnClickListener {
             goPersonageBack.onGoPersonageBack()
         }
-        personageOrigin.setOnClickListener {
-            goLocation.onGoLocation(originId)
+        if (personageOrigin.text != "?") {
+            personageOrigin.setOnClickListener {
+                goLocation.onGoLocation(originId)
+            }
         }
-        personageLocation.setOnClickListener {
-            goLocation.onGoLocation(locationId)
+        if (personageLocation.text != "?") {
+            personageLocation.setOnClickListener {
+                goLocation.onGoLocation(locationId)
+            }
         }
-
-
-
-
-        personageDetailsViewModel.episodeLiveData.observe(viewLifecycleOwner){
+        personageDetailsViewModel.episodeLiveData.observe(viewLifecycleOwner) {
             episodeAdapter.episodeList = it
         }
-
-
 
         val decorator = DividerItemDecoration(context, GridLayoutManager.VERTICAL)
         decorator.setDrawable(resources.getDrawable(R.drawable.separator, null))
@@ -121,26 +125,26 @@ class PersonageDetailsFragment : Fragment(R.layout.fragment_personage_details) {
 
     private fun loadingImage(string: String, imageView: ImageView) {
         Picasso.get().load(string).into(
-                imageView, object : Callback {
-            override fun onSuccess() {
-                Log.d("OK", "OK")
-            }
+            imageView, object : Callback {
+                override fun onSuccess() {
+                    Log.d("OK", "OK")
+                }
 
-            override fun onError(e: Exception?) {
-                Log.d("Error", "Error")
-            }
-        })
+                override fun onError(e: Exception?) {
+                    Log.d("Error", "Error")
+                }
+            })
     }
 
-    private fun getMyId(url : String) : Int =
-            (url.substring(url.lastIndexOf("/")+1)).toInt()
+    private fun getMyId(url: String): Int =
+        (url.substring(url.lastIndexOf("/") + 1)).toInt()
 
     interface GoPersonageBack {
         fun onGoPersonageBack()
     }
 
     interface GoLocation {
-        fun onGoLocation (myId : Int)
+        fun onGoLocation(myId: Int)
     }
 
 

@@ -11,7 +11,6 @@ import com.example.demo.PersonageAdapter
 import com.example.demo.PersonageListFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentEpisodeDetailsBinding
-import com.example.demo.domain.model.Episode
 import com.example.demo.ui.episode.list.EpisodeListFragment
 import kotlinx.android.synthetic.main.fragment_episode_details.*
 
@@ -20,13 +19,12 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
     private val episodeDetailsViewModel by viewModels<EpisodeDetailsViewModel>()
     private lateinit var goEpisodeBack: GoEpisodeBack
     private lateinit var binding: FragmentEpisodeDetailsBinding
-    private lateinit var personageAdapter : PersonageAdapter
+    private lateinit var personageAdapter: PersonageAdapter
     private lateinit var itemPersonageSelected: PersonageListFragment.ItemPersonageSelected
-
     private var myId = 0
 
     companion object {
-        fun newInstance(id : Int) = EpisodeDetailFragment().apply {
+        fun newInstance(id: Int) = EpisodeDetailFragment().apply {
             val bundle = Bundle()
             bundle.putInt(EpisodeListFragment.EPISODE_LIST_TAG, id)
             arguments = bundle
@@ -52,9 +50,9 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentEpisodeDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -62,8 +60,8 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         episodeDetailRecyclerView.adapter = personageAdapter
+
         episodeDetailsViewModel.episodeLiveData.observe(viewLifecycleOwner) {
             episodeName.text = it.episodeName
             episodeNumber.text = it.episode
@@ -72,8 +70,9 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
         toolbar.setNavigationOnClickListener {
             goEpisodeBack.onGoEpisodeBack()
         }
-        episodeDetailsViewModel.personageLiveData.observe(viewLifecycleOwner){
+        episodeDetailsViewModel.personageLiveData.observe(viewLifecycleOwner) {
             personageAdapter.personageList = it
+
         }
     }
 

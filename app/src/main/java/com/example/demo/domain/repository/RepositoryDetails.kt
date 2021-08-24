@@ -10,8 +10,4 @@ interface RepositoryDetails {
     fun getPersonageDetails(id :Int, executor: Executor, callback : (result : SuccessDetails<Personage>) -> Unit)
     fun getLocationDetails(id :Int,executor: Executor, callback : (result : SuccessDetails<Location>) -> Unit)
     fun getEpisodeDetails(id :Int,executor: Executor, callback : (result : SuccessDetails<Episode>) -> Unit)
-
-    fun getEpisodeForRV(episodes: ArrayList<String>,executor: Executor, callback : (result : SuccessList<ArrayList<Episode>>) -> Unit)
-    fun getPersonageForRV(personages: ArrayList<String>,executor: Executor, callback : (result : SuccessList<ArrayList<Personage>>) -> Unit)
-
 }

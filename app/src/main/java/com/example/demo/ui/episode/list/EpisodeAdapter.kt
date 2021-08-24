@@ -24,10 +24,10 @@ class EpisodeAdapter(
         )
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        val pos = holder.adapterPosition
+
         holder.bind(episodeList[position])
         holder.itemView.setOnClickListener {
-            onClick(pos)
+            onClick(episodeList[position].episodeId)
         }
     }
 

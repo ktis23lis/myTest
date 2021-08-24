@@ -30,4 +30,6 @@ interface RickAndMortyApi {
     @GET("/api/character/{id}")
     fun getPersonageDetail(@Path("id") id: Int): Call<Personage>
 
+
+
 }

@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity(),
         EpisodeDetailFragment.GoEpisodeBack {
     private lateinit var bottomMenu: BottomNavigationView
 
+    var personageListFragment = PersonageListFragment()
+    var locationListFragment = LocationListFragment()
+    var episodeListFragment = EpisodeListFragment()
+
     companion object {
         fun intent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
@@ -42,17 +46,14 @@ class MainActivity : AppCompatActivity(),
             when (item.itemId) {
                 R.id.bottomMenuPersonage -> {
                     initPersonageFragment()
-                    Toast.makeText(this, " personage", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.bottomMenuLocation -> {
                     initLocationFragment()
-                    Toast.makeText(this, " location", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.bottomMenuEpisode -> {
                     initEpisodeFragment()
-                    Toast.makeText(this, " episode", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> {
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun initPersonageFragment() {
         supportFragmentManager.beginTransaction().run {
-            val personageListFragment = PersonageListFragment.newInstance()
+            personageListFragment = PersonageListFragment.newInstance()
             replace(R.id.container, personageListFragment)
             commit()
         }
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun initLocationFragment() {
         supportFragmentManager.beginTransaction().run {
-            val locationListFragment = LocationListFragment.newInstance()
+            locationListFragment = LocationListFragment.newInstance()
             replace(R.id.container, locationListFragment)
             commit()
         }
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun initEpisodeFragment() {
         supportFragmentManager.beginTransaction().run {
-            val episodeListFragment = EpisodeListFragment.newInstance()
+            episodeListFragment = EpisodeListFragment.newInstance()
             replace(R.id.container, episodeListFragment)
             commit()
         }
@@ -96,12 +97,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onItemEpisodeSelected(myId: Int) {
-        supportFragmentManager.beginTransaction().run {
-            val episodeDetailsFragment = EpisodeDetailFragment.newInstance(myId)
-            replace(R.id.container, episodeDetailsFragment)
-            addToBackStack(null)
-            commit()
-        }
+        initEpisodeDetails(myId)
     }
 
     override fun onGoPersonageBack() {
@@ -133,7 +129,7 @@ class MainActivity : AppCompatActivity(),
         supportFragmentManager.beginTransaction().run {
             val personageDetailsFragment = PersonageDetailsFragment.newInstance(myId)
             replace(R.id.container, personageDetailsFragment)
-            addToBackStack(null)
+                addToBackStack(null)
             commit()
         }
     }
@@ -142,7 +138,7 @@ class MainActivity : AppCompatActivity(),
         supportFragmentManager.beginTransaction().run {
             val episodeDetailsFragment = EpisodeDetailFragment.newInstance(myId)
             replace(R.id.container, episodeDetailsFragment)
-            addToBackStack(null)
+                addToBackStack(null)
             commit()
         }
     }
