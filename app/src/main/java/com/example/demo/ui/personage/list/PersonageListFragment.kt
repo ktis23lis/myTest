@@ -7,14 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.databinding.FragmentPersonageListBinding
-import com.example.demo.domain.Personage
+import com.example.demo.domain.model.Personage
 import com.example.demo.ui.PersonageListViewModel
 
 class PersonageListFragment : Fragment(R.layout.fragment_personage_list) {
@@ -32,8 +31,8 @@ class PersonageListFragment : Fragment(R.layout.fragment_personage_list) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         itemPersonageSelected = context as ItemPersonageSelected
-        personageAdapter = PersonageAdapter { personage ->
-            itemPersonageSelected.onItemPersonageSelected(personage)
+        personageAdapter = PersonageAdapter { i ->
+            itemPersonageSelected.onItemPersonageSelected(i)
         }
     }
 
@@ -71,6 +70,6 @@ class PersonageListFragment : Fragment(R.layout.fragment_personage_list) {
     }
 
     interface ItemPersonageSelected {
-        fun onItemPersonageSelected(personage: Personage)
+        fun onItemPersonageSelected(id: Int)
     }
 }

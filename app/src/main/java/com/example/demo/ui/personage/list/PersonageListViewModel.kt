@@ -3,13 +3,13 @@ package com.example.demo.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.demo.domain.Personage
-import com.example.demo.domain.repository.RepositoryListRetrofitList
+import com.example.demo.domain.model.Personage
+import com.example.demo.domain.repository.RepositoryRetrofitList
 import java.util.concurrent.Executors
 
 class PersonageListViewModel : ViewModel() {
 
-    private var myRep = RepositoryListRetrofitList()
+    private var myRep = RepositoryRetrofitList()
     private val executors = Executors.newCachedThreadPool()
     private var _personageLiveData = MutableLiveData<ArrayList<Personage>>()
     private val _loadingLiveData = MutableLiveData(false)

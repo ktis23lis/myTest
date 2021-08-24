@@ -1,4 +1,4 @@
-package com.example.demo.domain
+package com.example.demo.domain.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -14,5 +14,7 @@ data class Episode (
         @SerializedName("episode")
         val episode : String,
         @SerializedName("air_date")
-        val episodeAirFate : String)
+        val episodeAirFate : String,
+        @SerializedName("characters")
+        val episodeCharacters : ArrayList<String>)
     : Parcelable

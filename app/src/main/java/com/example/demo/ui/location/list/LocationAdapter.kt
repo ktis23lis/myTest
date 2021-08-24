@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.domain.Location
+import com.example.demo.domain.model.Location
 
 class LocationAdapter(
     private val onClick :(Int) ->Unit

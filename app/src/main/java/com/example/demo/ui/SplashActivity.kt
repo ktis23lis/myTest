@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     companion object{
-        private const val SHOW_TIME = 3000L
+        private const val SHOW_TIME = 100L
     }
 
     private val myHandler = Handler(Looper.myLooper()!!)
