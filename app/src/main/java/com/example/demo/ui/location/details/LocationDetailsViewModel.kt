@@ -12,7 +12,6 @@ class LocationDetailsViewModel : ViewModel() {
 
     private var myId = 0
     private var myRep = RepositoryRetrofitDetails()
-    private val executors = Executors.newCachedThreadPool()
     private var _locationLiveData = MutableLiveData<Location>()
     private var _personageLiveData = MutableLiveData<ArrayList<Personage>>()
     val locationLiveData: LiveData<Location> = _locationLiveData
@@ -20,12 +19,12 @@ class LocationDetailsViewModel : ViewModel() {
     private var resultArray = ArrayList<Personage>()
 
     fun getLocation(id: Int) {
-        myRep.getLocationDetails(id, executors) { location ->
+        myRep.getLocationDetails(id) { location ->
             val result: Location = location.value
             _locationLiveData.value = result
             for (i in result.locationResidents) {
                 myId = (i.substring(i.lastIndexOf("/") + 1)).toInt()
-                myRep.getPersonageDetails(myId, executors) {
+                myRep.getPersonageDetails(myId) {
                     resultArray.add(it.value)
                     _personageLiveData.value = resultArray
                 }

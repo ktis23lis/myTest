@@ -10,7 +10,6 @@ import java.util.concurrent.Executors
 class PersonageListViewModel : ViewModel() {
 
     private var myRep = RepositoryRetrofitList()
-    private val executors = Executors.newCachedThreadPool()
     private var _personageLiveData = MutableLiveData<ArrayList<Personage>>()
     private val _loadingLiveData = MutableLiveData(false)
     val personageLiveData: LiveData<ArrayList<Personage>> = _personageLiveData
@@ -18,7 +17,7 @@ class PersonageListViewModel : ViewModel() {
 
     fun getPersonage() {
         _loadingLiveData.value = true
-        myRep.getPersonageArray(executors) {
+        myRep.getPersonageArray() {
             val result: ArrayList<Personage> = it.value
             _personageLiveData.value = result
             _loadingLiveData.value = false

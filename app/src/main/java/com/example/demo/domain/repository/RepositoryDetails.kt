@@ -7,7 +7,7 @@ import java.util.concurrent.Executor
 
 interface RepositoryDetails {
 
-    fun getPersonageDetails(id :Int, executor: Executor, callback : (result : SuccessDetails<Personage>) -> Unit)
-    fun getLocationDetails(id :Int,executor: Executor, callback : (result : SuccessDetails<Location>) -> Unit)
-    fun getEpisodeDetails(id :Int,executor: Executor, callback : (result : SuccessDetails<Episode>) -> Unit)
+    fun getPersonageDetails(id :Int, callback : (result : SuccessDetails<Personage>) -> Unit)
+    fun getLocationDetails(id :Int, callback : (result : SuccessDetails<Location>) -> Unit)
+    fun getEpisodeDetails(id :Int, callback : (result : SuccessDetails<Episode>) -> Unit)
 }

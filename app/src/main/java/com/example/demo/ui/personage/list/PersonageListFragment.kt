@@ -53,6 +53,8 @@ class PersonageListFragment : Fragment(R.layout.fragment_personage_list) {
         return binding.root
     }
 
+
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {

@@ -70,7 +70,10 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_details) {
         toolbar.setNavigationOnClickListener {
             goEpisodeBack.onGoEpisodeBack()
         }
+
+
         episodeDetailsViewModel.personageLiveData.observe(viewLifecycleOwner) {
+
             personageAdapter.personageList = it
 
         }
