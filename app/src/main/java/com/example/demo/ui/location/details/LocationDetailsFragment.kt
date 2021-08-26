@@ -13,13 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.PersonageAdapter
-import com.example.demo.PersonageDetailsFragment
 import com.example.demo.PersonageListFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentLocationDetailsBinding
-import com.example.demo.domain.Location
-import com.example.demo.ui.episode.list.EpisodeAdapter
-import com.example.demo.ui.episode.list.EpisodeListFragment
+import com.example.demo.domain.model.Personage
 import com.example.demo.ui.location.list.LocationListFragment
 
 class LocationDetailsFragment : Fragment(R.layout.fragment_location_details) {
@@ -44,8 +41,9 @@ class LocationDetailsFragment : Fragment(R.layout.fragment_location_details) {
         super.onAttach(context)
         goLocationBack = context as GoLocationBack
         itemPersonageSelected = context as PersonageListFragment.ItemPersonageSelected
-        personageAdapter = PersonageAdapter { personage ->
-            itemPersonageSelected.onItemPersonageSelected(personage)
+
+        personageAdapter = PersonageAdapter { i ->
+            itemPersonageSelected.onItemPersonageSelected(i)
         }
     }
 
@@ -71,28 +69,26 @@ class LocationDetailsFragment : Fragment(R.layout.fragment_location_details) {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
-
         locationDetailRecyclerView.adapter = personageAdapter
-
         locationDetailsViewModel.locationLiveData.observe(viewLifecycleOwner) {
             locationName.text = it.locationName
             locationType.text = it.locationType
             locationDimension.text = it.locationDimension
-        }
 
+            locationDetailsViewModel.personageLiveData.observe(viewLifecycleOwner){
+                personageAdapter.personageList = it
+            }
+
+        }
         toolbar.setNavigationOnClickListener {
             goLocationBack.onGoLocationBack()
-        }
-
-
-        locationDetailsViewModel.personageLiveData.observe(viewLifecycleOwner){
-            personageAdapter.personageList = it
         }
 
         val decorator = DividerItemDecoration(context, GridLayoutManager.VERTICAL)
         decorator.setDrawable(resources.getDrawable(R.drawable.separator, null))
         locationDetailRecyclerView.addItemDecoration(decorator)
     }
+
 
     interface GoLocationBack {
         fun onGoLocationBack()

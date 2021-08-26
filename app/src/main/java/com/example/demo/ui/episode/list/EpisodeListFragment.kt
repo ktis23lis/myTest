@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.demo.R
 import com.example.demo.databinding.FragmentEpisodeListBinding
-import com.example.demo.databinding.FragmentLocationListBinding
-import com.example.demo.domain.Episode
-import kotlinx.android.synthetic.main.fragment_episode_list.*
+import com.example.demo.domain.model.Episode
 
 class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
 
@@ -33,8 +31,8 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         itemEpisodeSelected = context as ItemEpisodeSelected
-        episodeAdapter = EpisodeAdapter{i ->
-            itemEpisodeSelected.onItemEpisodeSelected(i)
+        episodeAdapter = EpisodeAdapter{ pos ->
+            itemEpisodeSelected.onItemEpisodeSelected(pos)
         }
     }
 
@@ -72,6 +70,6 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
     }
 
     interface ItemEpisodeSelected {
-        fun onItemEpisodeSelected(myId: Int)
+        fun onItemEpisodeSelected(id : Int)
     }
 }

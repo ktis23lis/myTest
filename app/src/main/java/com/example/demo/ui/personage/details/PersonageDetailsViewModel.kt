@@ -1,30 +1,37 @@
 package com.example.demo.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.demo.domain.Episode
-import com.example.demo.domain.Personage
+import com.example.demo.domain.model.Episode
+import com.example.demo.domain.model.Personage
 import com.example.demo.domain.repository.RepositoryRetrofitDetails
 import java.util.concurrent.Executors
 
 class PersonageDetailsViewModel : ViewModel() {
 
+    private var myId = 0
     private var myRep = RepositoryRetrofitDetails()
-    private val executors = Executors.newCachedThreadPool()
+    private var resultArray = ArrayList<Episode>()
     private var _personageLiveData = MutableLiveData<Personage>()
     private var _episodeLiveData = MutableLiveData<ArrayList<Episode>>()
     val personageLiveData: LiveData<Personage> = _personageLiveData
     val episodeLiveData: LiveData<ArrayList<Episode>> = _episodeLiveData
 
-    fun getPersonage(id: Int, episode: ArrayList<String>) {
-        myRep.getPersonageDetails(id, executors) {
-            val result: Personage = it.value
+    fun getPersonage(id: Int) {
+        myRep.getPersonageDetails(id) { personage ->
+            val result: Personage = personage.value
             _personageLiveData.value = result
-        }
-        myRep.getEpisodeForRV(episode, executors) {
-            val result: ArrayList<Episode> = it.value
-            _episodeLiveData.value = result
+            for (i in result.personageEpisode) {
+                myId = (i.substring(i.lastIndexOf("/") + 1)).toInt()
+                myRep.getEpisodeDetails(myId) {
+                    resultArray.add(it.value)
+                    _episodeLiveData.value = resultArray
+//                    Log.e("AAA", "$id")
+                }
+            }
         }
     }
 }
+
